@@ -1,6 +1,6 @@
 enum TaskStatusDTO {
   COMPLETED = "COMPLETED",
-  NOT_COMPLETED = "COMPLETED",
+  NOT_COMPLETED = "NOT_COMPLETED",
 }
 
 enum SnackbarVariant {
@@ -11,7 +11,12 @@ enum SnackbarVariant {
   INFO = "INFO",
 }
 
-export { TaskStatusDTO, SnackbarVariant };
+enum TaskDetailPageMode {
+  VIEW = "VIEW",
+  EDIT = "EDIT",
+}
+
+export { TaskStatusDTO, SnackbarVariant, TaskDetailPageMode };
 
 export * from "./Colors";
 export * from "./StorageKeys";

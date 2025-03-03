@@ -1,12 +1,14 @@
 import { useEffect, useRef } from "react";
+import { CommonActions } from "@react-navigation/native";
 
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { FormikHelpers } from "formik";
 
 import { LoginScreen } from "@/screens";
-import { useLoginMutation } from "@/redux";
+import { LoginApiResponse, useLoginMutation } from "@/redux";
 import SnackbarManager from "@/components/SnackbarManager";
 import { SnackbarVariant } from "@/constants";
+import { storage } from "@/utils";
 
 import type {
   LoginFormValidationSchema,
@@ -27,7 +29,9 @@ function LoginContainer(props: LoginContainerProps) {
   const formikHelpersRef = useRef<FormikHelpers<LoginFormValidationSchema>>();
 
   useEffect(() => {
-    if (data) {
+    if (data?.success && data?.data && isSuccess) {
+      processLogin(data);
+
       SnackbarManager.show({
         title: "Logged in successfully",
         variant: SnackbarVariant.SUCCESS,
@@ -36,6 +40,28 @@ function LoginContainer(props: LoginContainerProps) {
       formikHelpersRef.current?.resetForm();
     }
   }, [isSuccess]);
+
+  async function processLogin(data: LoginApiResponse) {
+    if (data?.data) {
+      storage.setAccessToken(data.data?.token);
+      storage.setUserProfile(data.data?.user);
+    }
+
+    goToHome();
+  }
+
+  function goToHome() {
+    props.navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          {
+            name: "Home",
+          },
+        ],
+      })
+    );
+  }
 
   function onSubmitLogin(
     values: LoginFormValidationSchema,
@@ -50,8 +76,6 @@ function LoginContainer(props: LoginContainerProps) {
   }
 
   function onPressSignup() {
-    console.log("on press signup calling....");
-
     props.navigation.navigate("Signup");
   }
 

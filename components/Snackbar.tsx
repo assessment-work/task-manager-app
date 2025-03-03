@@ -53,7 +53,7 @@ function Snackbar() {
     <PaperSnackbar
       visible={state.visible}
       onDismiss={() => setState({ ...state, visible: false })}
-      duration={6000}
+      duration={3000}
       theme={{
         colors: {
           primary: GetSnackBarBackgroundColor(state.variant),

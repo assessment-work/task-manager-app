@@ -26,11 +26,16 @@ async function getUserProfile(): Promise<UserDTO | undefined> {
   return profile;
 }
 
+async function clearAll() {
+  await AsyncStorage.clear();
+}
+
 const storage = {
   setAccessToken,
   getAccessToken,
   setUserProfile,
   getUserProfile,
+  clearAll,
 };
 
 export { storage };

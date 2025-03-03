@@ -15,6 +15,7 @@ interface SignupFormValidationSchema {
 interface AddTaskFormValidationSchema {
   title: string;
   description: string;
+  status: TaskStatusDTO;
 }
 
 interface EditTaskFormValidationSchema {

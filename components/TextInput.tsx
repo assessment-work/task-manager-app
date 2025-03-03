@@ -11,11 +11,14 @@ interface TextInputProps {
   value?: string;
   mode?: "flat" | "outlined";
   label?: string;
+  placeholder?: string;
   touched?: boolean;
   error?: string;
   secureTextEntry?: boolean;
   isPassword?: boolean;
   autoCapitalize?: "none" | "sentences" | "words" | "characters";
+  isEditable?: boolean;
+  isDisabled?: boolean;
   onPressRightIcon?: () => void;
   onChangeText?: (text: string) => void;
   onBlur?: (e?: NativeSyntheticEvent<TextInputFocusEventData>) => void;
@@ -35,12 +38,15 @@ function TextInput(props: TextInputProps) {
       <RNPTextInput
         value={props.value}
         label={props.label}
+        placeholder={props.placeholder}
         mode={props.mode ?? "outlined"}
         error={props.error && props.touched ? true : false}
         secureTextEntry={isSecureTextEntry}
         onBlur={props.onBlur}
         onChangeText={props.onChangeText}
         autoCapitalize={props.autoCapitalize}
+        editable={props.isEditable}
+        disabled={props.isDisabled}
         right={
           props.isPassword ? (
             <RNPTextInput.Icon

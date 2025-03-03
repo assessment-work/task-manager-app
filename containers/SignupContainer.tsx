@@ -53,7 +53,7 @@ function SignupContainer(props: SignupContainerProps) {
   }
 
   function onPressLogin() {
-    props.navigation.navigate("Login");
+    props.navigation.goBack();
   }
 
   return (

@@ -49,7 +49,7 @@ const apiSlice = createApi({
       }),
       invalidatesTags: ["GetAllTask"],
     }),
-    getAllTask: build.query<GetAllTaskApiResponse, undefined>({
+    getAllTask: build.query<GetAllTaskApiResponse, {}>({
       query: () => ({
         url: api.endpoints.task.list,
         method: api.methods.get,
@@ -74,9 +74,13 @@ const apiSlice = createApi({
           id: args.id,
         }),
         method: api.methods.put,
-        body: args,
+        body: {
+          title: args.title,
+          description: args.description,
+          status: args.status,
+        } as Partial<EditTaskByIdApiArgs>,
       }),
-      invalidatesTags: ["GetTaskById"],
+      invalidatesTags: ["GetTaskById", "GetAllTask"],
     }),
     deleteTask: build.mutation<DeleteTaskApiResponse, DeleteTaskByIdApiArgs>({
       query: (args: DeleteTaskByIdApiArgs) => ({

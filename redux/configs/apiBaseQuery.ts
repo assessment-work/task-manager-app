@@ -13,7 +13,7 @@ import { handleApiErrors, storage } from "@/utils";
 const mutex = new Mutex();
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://192.168.27.80:8000",
+  baseUrl: "http://192.168.1.48:8000",
   prepareHeaders: async (headers) => {
     const token = await storage.getAccessToken();
 

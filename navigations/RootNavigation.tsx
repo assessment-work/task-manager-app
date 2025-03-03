@@ -5,6 +5,7 @@ import {
   HomeContainer,
   LoginContainer,
   SignupContainer,
+  SplashContainer,
   TaskDetailContainer,
 } from "@/containers";
 
@@ -14,7 +15,15 @@ const Stack = createNativeStackNavigator<RootNavigtionParamList>();
 
 function RootNavigation() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Splash">
+      <Stack.Screen
+        name="Splash"
+        component={SplashContainer}
+        options={{
+          headerShown: false,
+        }}
+      />
+
       <Stack.Group>
         <Stack.Screen name="Login" component={LoginContainer} />
         <Stack.Screen name="Signup" component={SignupContainer} />
@@ -22,8 +31,20 @@ function RootNavigation() {
 
       <Stack.Group>
         <Stack.Screen name="Home" component={HomeContainer} />
-        <Stack.Screen name="AddTask" component={AddTaskContainer} />
-        <Stack.Screen name="TaskDetail" component={TaskDetailContainer} />
+        <Stack.Screen
+          name="AddTask"
+          component={AddTaskContainer}
+          options={{
+            title: "Add Task",
+          }}
+        />
+        <Stack.Screen
+          name="TaskDetail"
+          component={TaskDetailContainer}
+          options={{
+            title: "Task Detail",
+          }}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );

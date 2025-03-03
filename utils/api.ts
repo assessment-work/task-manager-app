@@ -3,6 +3,7 @@ import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import SnackbarManager from "@/components/SnackbarManager";
 import { SnackbarVariant } from "@/constants";
 import { ErrorResponseDTO } from "@/dtos";
+import { storage } from "./storage";
 
 function replaceUrlVariables<T>(
   url: string,
@@ -21,7 +22,7 @@ function replaceUrlVariables<T>(
   });
 }
 
-function handleApiErrors(error: FetchBaseQueryError) {
+async function handleApiErrors(error: FetchBaseQueryError) {
   let message = "Something went wrong";
 
   if (typeof error.status === "string") {
@@ -36,6 +37,10 @@ function handleApiErrors(error: FetchBaseQueryError) {
   }
 
   if (typeof error.status === "number") {
+    if (error.status === 401) {
+      await storage.clearAll();
+    }
+
     const err: ErrorResponseDTO = error.data as ErrorResponseDTO;
 
     message = err.error;
